@@ -58,20 +58,20 @@ class MetaTag
 
     /**
      * @param  \Illuminate\Http\Request  $request
-     * @param  array $config
+     * @param  null|array $config
      * @param  string $defaultLocale
      */
-    public function __construct(Request $request, array $config = [], $defaultLocale)
+    public function __construct(Request $request, ?array $config = [], ?string $defaultLocale = '')
     {
         $this->request = $request;
-        $this->config = $config;
+        $this->config = $config ?? [];
 
         // Set defaults
         $this->set('title', $this->config['title']);
         $this->set('url', $this->request->url());
 
         // Set default locale
-        $this->defaultLocale = $defaultLocale;
+        $this->defaultLocale = $defaultLocale ?? '';
 
         // Is locales a callback
         if (is_callable($this->config['locales'])) {
