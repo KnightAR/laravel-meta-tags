@@ -3,6 +3,7 @@
 namespace Torann\LaravelMetaTags;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class MetaTagsServiceProvider extends ServiceProvider
 {
