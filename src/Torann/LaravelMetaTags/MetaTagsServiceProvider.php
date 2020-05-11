@@ -40,6 +40,8 @@ class MetaTagsServiceProvider extends ServiceProvider
                 $app['config']->get('app.locale')
             );
         });
+
+        $this->addBladeDirectives();
     }
 
     /**
@@ -50,5 +52,27 @@ class MetaTagsServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['metatag'];
+    }
+
+    /**
+     * Register blade directives
+     *
+     * @return void
+     */
+    protected function addBladeDirectives()
+    {
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+            $bladeCompiler->directive('meta', function ($arguments) {
+                return "<?php echo MetaTag::tag($arguments); ?>";
+            });
+
+            $bladeCompiler->directive('metas', function ($arguments) {
+                return "<?php echo MetaTag::tags($arguments); ?>";
+            });
+
+            $bladeCompiler->directive('metaopengraph', function () {
+                return "<?php echo MetaTag::openGraph(); ?>";
+            });
+        });
     }
 }
